@@ -3,6 +3,8 @@ package com.coded.spring.ordering
 import jakarta.inject.Named
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.JpaRepository
+import org.hibernate.annotations.CreationTimestamp
+import java.time.LocalDateTime
 
 @Named
 interface OrderRepository: JpaRepository<OnlineOrder, Long>
@@ -21,8 +23,11 @@ data class OnlineOrder(
     var restaurant: String,
 
     @CollectionTable
-    var items: List<String> = listOf()
+    var items: List<String> = listOf(),
+
+    @CreationTimestamp
+    var timeOrdered: LocalDateTime? = null
 
 ){
-    constructor() : this(null, "", "",listOf())
+    constructor() : this(null, "", "",listOf(), null)
 }

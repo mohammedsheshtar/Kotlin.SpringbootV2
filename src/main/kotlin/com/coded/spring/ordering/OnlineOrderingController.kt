@@ -8,7 +8,7 @@ class OnlineOrderingController(
 ) {
 
     @GetMapping("/orders")
-    fun getOrders() = orderRepository.findAll()
+    fun getOrders() = orderRepository.findAll().sortedBy {it.timeOrdered}
 
     @PostMapping("/orders")
     fun addOrders(@RequestBody request: RequestOrder): OnlineOrder {
