@@ -15,7 +15,7 @@ class OnlineOrderingController(
         return orderRepository.save(OnlineOrder(
             user = request.user,
             restaurant = request.restaurant,
-            items = request.items))
+            items = request.items.joinToString(", ")))
     }
 }
 

@@ -22,12 +22,13 @@ data class OnlineOrder(
 
     var restaurant: String,
 
-    @CollectionTable
-    var items: List<String> = listOf(),
+    //included the line below to indicate so that we can keep the items as a CSV in our database
+    @Column(columnDefinition = "TEXT")
+    var items: String,
 
     @CreationTimestamp
     var timeOrdered: LocalDateTime? = null
 
 ){
-    constructor() : this(null, "", "",listOf(), null)
+    constructor() : this(null, "", "","", null)
 }
