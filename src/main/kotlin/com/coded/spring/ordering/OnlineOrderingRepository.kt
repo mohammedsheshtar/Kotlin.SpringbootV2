@@ -22,7 +22,7 @@ data class OnlineOrder(
 
     var restaurant: String,
 
-    //included the line below to indicate so that we can keep the items as a CSV in our database
+    //included the line below to specify that we want to keep the items as a CSV in our database
     @Column(columnDefinition = "TEXT")
     var items: String,
 
