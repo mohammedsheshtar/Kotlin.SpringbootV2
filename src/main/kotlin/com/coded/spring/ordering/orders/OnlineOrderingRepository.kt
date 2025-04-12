@@ -1,5 +1,7 @@
-package com.coded.spring.ordering
+package com.coded.spring.ordering.orders
 
+import com.coded.spring.ordering.items.ItemsEntity
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.inject.Named
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.JpaRepository
@@ -7,11 +9,11 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
 
 @Named
-interface OrderRepository: JpaRepository<OnlineOrder, Long>
+interface OrderRepository: JpaRepository<OrderEntity, Long>
 
 @Entity
 @Table(name = "orders")
-data class OnlineOrder(
+data class OrderEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
@@ -22,13 +24,16 @@ data class OnlineOrder(
 
     var restaurant: String,
 
-    //included the line below to specify that we want to keep the items as a CSV in our database
-    @Column(columnDefinition = "TEXT")
-    var items: String,
+    // Binds each order to its related children items using the primary key orders.id → items.order_id
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    val items: List<ItemsEntity>? = null,
+
+
 
     @CreationTimestamp
     var timeOrdered: LocalDateTime? = null
 
 ){
-    constructor() : this(null, "", "","", null)
+    constructor() : this(null, "", "", null, null)
 }
