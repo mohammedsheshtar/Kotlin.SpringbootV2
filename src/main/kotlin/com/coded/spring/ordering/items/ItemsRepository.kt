@@ -17,6 +17,7 @@ data class ItemsEntity(
     var id: Long? = null,
 
     // maps each item to its parent order using the foreign key items.order_id → orders.id
+    @ManyToOne
     @JoinColumn(name = "order_id")
     @JsonBackReference
     val order: OrderEntity,

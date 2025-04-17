@@ -6,37 +6,17 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class OnlineOrderingController(
-    val orderRepository: OrderRepository,
-    val itemsRepository: ItemsRepository
+    private val onlineOrderingService: OnlineOrderingService
 ) {
 
     @GetMapping("/orders")
-    fun getOrders() = orderRepository.findAll().sortedBy { it.timeOrdered }
+    fun getOrders() = onlineOrderingService.getOrders()
 
     @PostMapping("/orders")
-    fun addOrders(@RequestBody request: RequestOrder): OrderEntity {
-        //adding the new order into our database
-        val order = orderRepository.save(
-            OrderEntity(
-                user = request.user,
-                restaurant = request.restaurant
-            )
-        )
-
-        //converting each item in our items objects list into an item entity to add them into the items database while also connecting each item to its order
-        val items = request.items.map { item ->
-            ItemsEntity(
-                order = order,
-                name = item.name,
-                price = item.price
-            )
-        }
-        itemsRepository.saveAll(items)
-
-        return order
-    }
-
+    fun addOrders(@RequestBody request: RequestOrder) =
+        onlineOrderingService.addOrders(request)
 }
+
 
 
 // the DTO (Data Transfer Object) for our orders and items list
@@ -46,7 +26,15 @@ data class RequestItem(
 )
 
 data class RequestOrder(
-    val user: String,
+    val userId: Long,
     val restaurant: String,
     val items: List<RequestItem>
+)
+
+data class OrderResponseDTO(
+    val id: Long,
+    val username: String,
+    val restaurant: String,
+    val items: List<RequestItem>,
+    val timeOrdered: String?
 )

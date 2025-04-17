@@ -1,6 +1,7 @@
 package com.coded.spring.ordering.orders
 
 import com.coded.spring.ordering.items.ItemsEntity
+import com.coded.spring.ordering.users.UserEntity
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.inject.Named
 import jakarta.persistence.*
@@ -19,8 +20,9 @@ data class OrderEntity(
     var id: Long? = null,
 
     // included the line below because 'user' is a reserved keyword in SQL and threw an error because of it, column escapes it
-    @Column(name = "`user`")
-    var user: String,
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    var user: UserEntity,
 
     var restaurant: String,
 
@@ -35,5 +37,5 @@ data class OrderEntity(
     var timeOrdered: LocalDateTime? = null
 
 ){
-    constructor() : this(null, "", "", null, null)
+    constructor() : this(null, UserEntity(), "", null, null)
 }
