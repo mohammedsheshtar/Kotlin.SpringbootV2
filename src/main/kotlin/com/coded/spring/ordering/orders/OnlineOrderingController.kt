@@ -12,7 +12,7 @@ class OnlineOrderingController(
     @GetMapping("/orders")
     fun getOrders() = onlineOrderingService.getOrders()
 
-    @PostMapping("/orders")
+    @PostMapping("/orders/add")
     fun addOrders(@RequestBody request: RequestOrder) =
         onlineOrderingService.addOrders(request)
 }
