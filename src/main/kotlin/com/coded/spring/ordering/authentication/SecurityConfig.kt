@@ -32,10 +32,9 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/menus/**", "/register", "/authentication/**").permitAll() // public route
-                it.requestMatchers("/orders/**").authenticated()
-                it.requestMatchers("/profile/**").authenticated()
-                    .anyRequest().authenticated()
+                it.requestMatchers("/menus", "/register", "/authentication/**", "/hello", "/orders/**", "/profile/**").permitAll() // public route
+                //it.requestMatchers("/orders/**", "/profile/**").authenticated()
+                    //.anyRequest().authenticated()
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

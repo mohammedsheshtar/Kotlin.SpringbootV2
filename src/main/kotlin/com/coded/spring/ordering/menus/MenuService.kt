@@ -13,7 +13,7 @@ class MenuService(
             name = dto.name,
             price = dto.price
         )
-        val saved = menuRepository.save(newMenu)
-        return MenuDTO(saved.name, saved.price)
+        menuRepository.save(newMenu)
+        return MenuDTO(newMenu.name, newMenu.price)
     }
 }

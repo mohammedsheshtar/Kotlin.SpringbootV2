@@ -43,8 +43,8 @@ class ProfileService(
                 phoneNumber = request.phoneNumber
             )
         }
-        profileRepository.save(profile)
 
+        profileRepository.save(profile)
         return ResponseEntity.ok().build()
     }
 }
