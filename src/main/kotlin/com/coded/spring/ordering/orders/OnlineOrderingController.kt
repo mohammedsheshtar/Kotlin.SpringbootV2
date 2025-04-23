@@ -32,7 +32,7 @@ data class RequestOrder(
 )
 
 data class OrderResponseDTO(
-    val id: Long,
+    val orderId: Long,
     val username: String,
     val restaurant: String,
     val items: List<RequestItem>,

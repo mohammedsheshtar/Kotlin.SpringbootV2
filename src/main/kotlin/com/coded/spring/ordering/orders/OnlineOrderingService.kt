@@ -3,6 +3,8 @@ package com.coded.spring.ordering.orders
 import com.coded.spring.ordering.items.ItemsEntity
 import com.coded.spring.ordering.items.ItemsRepository
 import com.coded.spring.ordering.users.UserRepository
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,9 +15,13 @@ class OnlineOrderingService(
 ) {
     fun getOrders(): List<OrderEntity> = orderRepository.findAll().filter { it.user != null }.sortedBy { it.timeOrdered }
 
-    fun addOrders(request: RequestOrder): OrderResponseDTO {
+    fun addOrders(request: RequestOrder): Any {
         val user = userRepository.findById(request.userId).orElseThrow {
             IllegalArgumentException("User with ID ${request.userId} not found")
+        }
+
+        if(request.items.any { it.price < 0.0 }) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mapOf("error" to "item price cannot be negative"))
         }
 
         val order = orderRepository.save(
@@ -36,7 +42,7 @@ class OnlineOrderingService(
         itemsRepository.saveAll(items)
 
         return OrderResponseDTO(
-            id = order.id!!,
+            orderId = order.id!!,
             username = user.username,
             restaurant = order.restaurant,
             timeOrdered = order.timeOrdered.toString(),
