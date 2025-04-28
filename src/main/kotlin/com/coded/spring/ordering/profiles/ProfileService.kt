@@ -11,6 +11,9 @@ class ProfileService(
     private val userRepository: UserRepository
 ) {
     fun createProfile(username: String, request: RequestProfileDTO): ResponseEntity<Any> {
+        val user = userRepository.findByUsername(username)
+            ?: return ResponseEntity.badRequest().body(mapOf("error" to "username was not found"))
+
         if(request.firstName.any { it.isDigit() }) {
             return ResponseEntity.badRequest().body(mapOf("error" to "first name must not contain any numbers"))
         }
@@ -22,10 +25,6 @@ class ProfileService(
         if(!request.phoneNumber.matches(Regex("^\\d{8}$"))) {
             return ResponseEntity.badRequest().body(mapOf("error" to "phone number must be 8 digits"))
         }
-
-        val user = userRepository.findByUsername(username)
-            ?: return ResponseEntity.badRequest().body(mapOf("error" to "user was not found"))
-
 
         val existingProfile = profileRepository.findByUserId(user)
 

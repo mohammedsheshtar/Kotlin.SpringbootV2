@@ -15,13 +15,13 @@ class OnlineOrderingService(
 ) {
     fun getOrders(): List<OrderEntity> = orderRepository.findAll().filter { it.user != null }.sortedBy { it.timeOrdered }
 
-    fun addOrders(request: RequestOrder): Any {
-        val user = userRepository.findById(request.userId).orElseThrow {
-            IllegalArgumentException("User with ID ${request.userId} not found")
-        }
+    fun addOrders(request: RequestOrder): ResponseEntity<Any> {
+        val user = userRepository.findById(request.userId).orElse(null)
+            ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mapOf("error" to "user with ID ${request.userId} was not found"))
 
-        if(request.items.any { it.price < 0.0 }) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mapOf("error" to "item price cannot be negative"))
+        if (request.items.any { it.price < 0.0 }) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(mapOf("error" to "item price cannot be negative"))
         }
 
         val order = orderRepository.save(
@@ -41,14 +41,16 @@ class OnlineOrderingService(
 
         itemsRepository.saveAll(items)
 
-        return OrderResponseDTO(
-            orderId = order.id!!,
-            username = user.username,
-            restaurant = order.restaurant,
-            timeOrdered = order.timeOrdered.toString(),
-            items = items.map {
-                RequestItem(name = it.name, price = it.price)
-            }
+        return ResponseEntity.status(HttpStatus.OK).body(
+            OrderResponseDTO(
+                orderId = order.id!!,
+                username = user.username,
+                restaurant = order.restaurant,
+                timeOrdered = order.timeOrdered.toString(),
+                items = items.map {
+                    RequestItem(name = it.name, price = it.price)
+                }
+            )
         )
     }
 }

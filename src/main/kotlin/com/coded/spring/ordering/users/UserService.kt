@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mapOf("error" to "password must have at least one digit"))
             }
 
-            val hashedPassword = passwordEncoder.encode(request.password)
+                val hashedPassword = passwordEncoder.encode(request.password)
             val newUser = UserEntity(username = request.username, password = hashedPassword)
             userRepository.save(newUser)
 

@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 class SecurityConfig(
     private val userDetailsService: CustomUserDetailsService,
     private val jwtAuthFilter: JwtAuthenticationFilter,
@@ -32,9 +32,9 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/menus", "/register", "/authentication/**", "/orders/**", "/profile/**", "/hello").permitAll() // public route
-                //it.requestMatchers("/orders/**", "/profile/**").authenticated()
-                    //.anyRequest().authenticated()
+                it.requestMatchers("/menus", "/register", "/authentication/**", "/hello").permitAll() // public route
+                it.requestMatchers("/orders/**", "/profile/**").authenticated()
+                    .anyRequest().authenticated()
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
