@@ -20,8 +20,8 @@ data class MenuEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     val name: String,
-    @Column(precision = 9, scale = 3)
-    val price: BigDecimal
+        @Column(precision = 9, scale = 3)
+        val price: BigDecimal
 ){
     constructor() : this(null, "", BigDecimal.ZERO)
 }

@@ -10,7 +10,7 @@ class MenuController(
     private val menuService: MenuService
 ) {
     @GetMapping("/menus")
-    fun listMenu() = menuService.getMenu()
+    fun listMenu() = menuService.listMenu()
 
     @PostMapping("/menus")
     fun createMenu(@RequestBody menu: MenuDTO): MenuDTO = menuService.addMenu(menu)
