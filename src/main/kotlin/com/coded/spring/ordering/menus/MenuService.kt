@@ -28,7 +28,9 @@ class MenuService(
             price = dto.price
         )
         menuRepository.save(newMenu)
-        // where we write invalidation for cache
+
+        val menusCache = serverCache.getMap<String, List<MenuEntity>>("menus")
+        menusCache.remove("menus")
         return MenuDTO(newMenu.name, newMenu.price)
     }
 }
