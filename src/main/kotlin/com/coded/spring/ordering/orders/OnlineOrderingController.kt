@@ -2,8 +2,10 @@ package com.coded.spring.ordering.orders
 
 import com.coded.spring.ordering.items.ItemsEntity
 import com.coded.spring.ordering.items.ItemsRepository
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
 
+@Tag(name="MenuAPI")
 @RestController
 class OnlineOrderingController(
     private val onlineOrderingService: OnlineOrderingService

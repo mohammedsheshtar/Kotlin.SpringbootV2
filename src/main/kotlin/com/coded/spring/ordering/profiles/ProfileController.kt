@@ -1,11 +1,13 @@
 package com.coded.spring.ordering.profiles
 
 
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 
+@Tag(name="ProfileAPI")
 @RestController
 class ProfileController(
     private val profileService: ProfileService

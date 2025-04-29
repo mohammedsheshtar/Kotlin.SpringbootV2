@@ -1,8 +1,10 @@
 package com.coded.spring.ordering.menus
 
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
 
+@Tag(name="MenuAPI")
 @RestController
 class MenuController(
     private val menuService: MenuService
