@@ -9,8 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.coded.spring</groupId>
-	<artifactId>Ordering</artifactId>
+	<artifactId>Kotlin.SpringbootV2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>Kotlin.SpringbootV2</name>
 	<description>Kotlin.SpringbootV2</description>
 	<url/>
@@ -20,6 +21,10 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>authentication</module>
+		<module>ordering</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -122,7 +127,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-				<scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

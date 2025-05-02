@@ -8,7 +8,7 @@ import com.coded.spring.ordering.orders.RequestOrder
 import com.coded.spring.ordering.profiles.RequestProfileDTO
 import com.coded.spring.ordering.users.CreateUserRequest
 import com.coded.spring.ordering.users.UserEntity
-import com.coded.spring.ordering.users.UserRepository
+import com.coded.spring.authentication.users.UserRepository
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
