@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@Tag(name="MenuAPI")
+@Tag(name="OrderAPI")
 @RestController
 class OnlineOrderingController(
     private val onlineOrderingService: OnlineOrderingService

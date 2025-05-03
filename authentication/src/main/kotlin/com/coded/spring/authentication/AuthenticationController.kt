@@ -23,7 +23,7 @@ class AuthenticationController(
     private val jwtService: JwtService,
     private val userService: UserService
 ) {
-
+    @Tag(name = "AuthenticationAPI")
     @PostMapping("/login")
     fun login(@RequestBody authRequest: AuthenticationRequest): AuthenticationResponse {
         val authToken = UsernamePasswordAuthenticationToken(authRequest.username, authRequest.password)
